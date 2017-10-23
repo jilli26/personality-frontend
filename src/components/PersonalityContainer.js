@@ -4,6 +4,7 @@ import SignUpForm from './SignUpForm'
 import { Link } from 'react-router-dom'
 import WritingSampleForm from './WritingSampleForm'
 import Profile from './Profile'
+import LoginForm from './LoginForm'
 
 
 class PersonalityContainer extends React.Component {
@@ -81,15 +82,19 @@ class PersonalityContainer extends React.Component {
 
 
   render() {
+    const loggedInPage = localStorage.getItem('personalityToken') ? <title>Welcome {localStorage.getItem('username')}</title> : <div className="Login-Signup"> <center><Link to="/login">Sign In</Link> | <Link to="/signup">Sign Up</Link></center> <LoginForm onLogin={this.props.loginProp} />
+      <SignUpForm
+        handleNameChange={this.handleNameChange}
+        handleUsernameChange={this.handleUsernameChange}
+        handlePasswordChange={this.handlePasswordChange}
+        handleGenderChange={this.handleGenderChange}
+        handleWritingSampleChange={this.handleWritingSampleChange}
+        submitForm={this.submitForm}/></div>
     return (
       <div>
-        <center><Link to="/login">Sign In</Link> | <Link to="/signup">Sign Up</Link></center>
-        <SignUpForm
-          handleNameChange={this.handleNameChange}
-          handleUsernameChange={this.handleUsernameChange}
-          handlePasswordChange={this.handlePasswordChange}
-          handleGenderChange={this.handleGenderChange}
-          submitForm={this.submitForm}/>
+
+        {loggedInPage}
+
         <WritingSampleForm
           handleWritingSampleChange={this.handleWritingSampleChange}
           submitWritingSample={this.submitWritingSample}/>
