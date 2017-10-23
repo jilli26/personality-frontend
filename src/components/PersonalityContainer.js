@@ -5,58 +5,17 @@ import { Link } from 'react-router-dom'
 import WritingSampleForm from './WritingSampleForm'
 import Profile from './Profile'
 import LoginForm from './LoginForm'
+import PersonalityApi from '../services/personalityApi'
 
 
 class PersonalityContainer extends React.Component {
 
   state = {
     userObj: {
-      name: "",
-      username: "",
-      password: "",
-      age: [],
-      gender: [],
+      id: localStorage.getItem('userID'),
+      username: localStorage.getItem('username'),
       writingSample: []
     }
-  }
-
-  handleNameChange = (event) => {
-    this.setState({
-      userObj: {
-        ...this.state.userObj,
-        name: event.target.value
-      }
-    })
-  }
-
-  handleUsernameChange = (event) => {
-    console.log(event.target.value)
-    this.setState({
-      userObj: {
-        ...this.state.userObj,
-        username: event.target.value
-      }
-    })
-  }
-
-  handlePasswordChange = (event) => {
-    console.log(event.target.value)
-    this.setState({
-      userObj: {
-        ...this.state.userObj,
-        password: event.target.value
-      }
-    })
-  }
-
-  handleGenderChange = (event) => {
-    console.log(event.target.innerText)
-    this.setState({
-      userObj: {
-        ...this.state.userObj,
-        gender: event.target.innerText
-      }
-    })
   }
 
   handleWritingSampleChange = (event) => {
@@ -69,15 +28,10 @@ class PersonalityContainer extends React.Component {
     })
   }
 
-  submitForm = (event) => {
-    console.log('submitted')
-    event.preventDefault()
-    //create user and authenticate in backend
-  }
-
   submitWritingSample = () => {
     console.log('writing sample submitted')
-    //post request to backend - must nest under user
+    //post request to backend
+    PersonalityApi.updateUser(this.state.userObj)
   }
 
 

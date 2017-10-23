@@ -10,6 +10,60 @@ const options = [
 
 class SignUpForm extends Component {
 
+  state = {
+    userObj: {
+      name: "",
+      username: "",
+      password: "",
+      age: "",
+      gender: ""
+    }
+  }
+
+  handleNameChange = (event) => {
+    this.setState({
+      userObj: {
+        ...this.state.userObj,
+        name: event.target.value
+      }
+    })
+  }
+
+  handleUsernameChange = (event) => {
+    console.log(event.target.value)
+    this.setState({
+      userObj: {
+        ...this.state.userObj,
+        username: event.target.value
+      }
+    })
+  }
+
+  handlePasswordChange = (event) => {
+    console.log(event.target.value)
+    this.setState({
+      userObj: {
+        ...this.state.userObj,
+        password: event.target.value
+      }
+    })
+  }
+
+  handleGenderChange = (event) => {
+    console.log(event.target.innerText)
+    this.setState({
+      userObj: {
+        ...this.state.userObj,
+        gender: event.target.innerText
+      }
+    })
+  }
+
+  submitForm = (event) => {
+    console.log('submitted')
+    event.preventDefault()
+    //create user and authenticate in backend
+  }
 
   render() {
     return (

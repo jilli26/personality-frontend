@@ -21,8 +21,10 @@ class App extends Component {
   loginUser = (userObj) => {
     PersonalityApi.login(userObj)
     .then((json) => {
+      debugger
       localStorage.setItem('personalityToken', json.token)
       localStorage.setItem('username', json.user.username)
+      localStorage.setItem('userID', json.user.id)
       this.setState({
         user: json.user
       })

@@ -1,4 +1,5 @@
 class PersonalityApi {
+
   static login(userObj) {
     const data = JSON.stringify(userObj)
     return fetch('http://localhost:3000/api/v1/login', {
@@ -15,6 +16,20 @@ class PersonalityApi {
 
   static register () {
 
+  }
+
+  static updateUser(userObj) {
+
+    fetch(`http://localhost:3000/api/v1/users/${userObj.id}`, {
+      method: "post",
+      body: JSON.stringify(userObj),
+      headers: {
+        "Accept":"application/json",
+        "Content-Type":"application/json",
+        "Authorization":`Bearer ${localStorage.getItem('personalityToken')}`
+      }
+    }).then(res => res.json())
+      .then(json => console.log(json))
   }
 
 }
