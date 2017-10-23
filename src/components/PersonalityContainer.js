@@ -1,6 +1,6 @@
 import React from 'react'
 import SignUpForm from './SignUpForm'
-import LoginForm from './LoginForm'
+// import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom'
 import WritingSampleForm from './WritingSampleForm'
 import Profile from './Profile'
@@ -9,45 +9,62 @@ import Profile from './Profile'
 class PersonalityContainer extends React.Component {
 
   state = {
-    name: "",
-    username: "",
-    password: "",
-    age: [],
-    gender: [],
-    writingSample: []
+    userObj: {
+      name: "",
+      username: "",
+      password: "",
+      age: [],
+      gender: [],
+      writingSample: []
+    }
   }
 
   handleNameChange = (event) => {
     this.setState({
-      name: event.target.value
+      userObj: {
+        ...this.state.userObj,
+        name: event.target.value
+      }
     })
   }
 
   handleUsernameChange = (event) => {
     console.log(event.target.value)
     this.setState({
-      username: event.target.value
+      userObj: {
+        ...this.state.userObj,
+        username: event.target.value
+      }
     })
   }
 
   handlePasswordChange = (event) => {
     console.log(event.target.value)
     this.setState({
-      password: event.target.value
+      userObj: {
+        ...this.state.userObj,
+        password: event.target.value
+      }
     })
   }
 
   handleGenderChange = (event) => {
-    console.log(event.target)
+    console.log(event.target.innerText)
     this.setState({
-      gender: event.target.innerText
+      userObj: {
+        ...this.state.userObj,
+        gender: event.target.innerText
+      }
     })
   }
 
   handleWritingSampleChange = (event) => {
     console.log(event.target.value)
     this.setState({
-      writingSample: event.target.value
+      userObj: {
+        ...this.state.userObj,
+        writingSample: event.target.value
+      }
     })
   }
 
@@ -72,12 +89,13 @@ class PersonalityContainer extends React.Component {
           handleUsernameChange={this.handleUsernameChange}
           handlePasswordChange={this.handlePasswordChange}
           handleGenderChange={this.handleGenderChange}
-          handleWritingSampleChange={this.handleWritingSampleChange}
           submitForm={this.submitForm}/>
         <WritingSampleForm
+          handleWritingSampleChange={this.handleWritingSampleChange}
           submitWritingSample={this.submitWritingSample}/>
         <Profile
-          name={this.state.name}/>
+          name={this.state.userObj.name}
+          writingSample={this.state.userObj.writingSample}/>
       </div>
 
     )
