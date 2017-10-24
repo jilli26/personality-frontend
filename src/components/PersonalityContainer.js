@@ -10,33 +10,23 @@ import PersonalityApi from '../services/personalityApi'
 
 class PersonalityContainer extends React.Component {
 
-  state = {
-    userObj: {
-      id: localStorage.getItem('userID'),
-      username: localStorage.getItem('username'),
-      writingSample: []
-    }
-  }
-
-  handleWritingSampleChange = (event) => {
+  handleChange = (event) => {
     console.log(event.target.value)
-    this.setState({
-      userObj: {
-        ...this.state.userObj,
-        writingSample: event.target.value
-      }
-    })
+    this.props.handleWritingSampleChange(event.target.value)
   }
 
   submitWritingSample = () => {
-    console.log('writing sample submitted')
+    const userObj = this.props.userInfo
     //post request to backend
-    PersonalityApi.updateUser(this.state.userObj)
+    PersonalityApi.submitWritingSample(userObj)
+      .then(json => {
+        debugger
+      })
   }
 
 
   render() {
-    const loggedInPage = localStorage.getItem('personalityToken') ? <title>Welcome {localStorage.getItem('username')}</title> : <div className="Login-Signup"> <center><Link to="/login">Sign In</Link> | <Link to="/signup">Sign Up</Link></center> <LoginForm onLogin={this.props.loginProp} />
+    const loggedInPage = localStorage.getItem('personalityToken') ? <title>Welcome {this.props.userInfo.name}</title> : <div className="Login-Signup"> <center><Link to="/login">Sign In</Link> | <Link to="/signup">Sign Up</Link></center> <LoginForm onLogin={this.props.loginProp} />
       <SignUpForm
         handleNameChange={this.handleNameChange}
         handleUsernameChange={this.handleUsernameChange}
@@ -44,21 +34,22 @@ class PersonalityContainer extends React.Component {
         handleGenderChange={this.handleGenderChange}
         handleWritingSampleChange={this.handleWritingSampleChange}
         submitForm={this.submitForm}/></div>
+
+
     return (
       <div>
 
         {loggedInPage}
 
-        <WritingSampleForm
-          handleWritingSampleChange={this.handleWritingSampleChange}
-          submitWritingSample={this.submitWritingSample}/>
-        <Profile
-          name={this.state.userObj.name}
-          writingSample={this.state.userObj.writingSample}/>
+
+
       </div>
 
     )
   }
 }
+  // {display}
+// const display = this.props.userInfo.insight.writing_sample ? <Profile name={this.props.userInfo.user.name} writingSample={this.props.userInfo.insight.writing_sample} personalInsight={this.props.userInfo.insight}/> : <WritingSampleForm handleChange={this.handleChange} submitWritingSample={this.submitWritingSample}/>
+
 
 export default PersonalityContainer

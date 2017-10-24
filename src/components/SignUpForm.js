@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Form } from 'semantic-ui-react'
 import { Grid } from 'semantic-ui-react'
+import PersonalityApi from '../services/personalityApi'
+import { withRouter } from 'react-router-dom'
 
 const options = [
   { key: 'm', text: 'Male', value: 'male' },
@@ -11,7 +13,7 @@ const options = [
 class SignUpForm extends Component {
 
   state = {
-    userObj: {
+    user: {
       name: "",
       username: "",
       password: "",
@@ -22,8 +24,8 @@ class SignUpForm extends Component {
 
   handleNameChange = (event) => {
     this.setState({
-      userObj: {
-        ...this.state.userObj,
+      user: {
+        ...this.state.user,
         name: event.target.value
       }
     })
@@ -32,8 +34,8 @@ class SignUpForm extends Component {
   handleUsernameChange = (event) => {
     console.log(event.target.value)
     this.setState({
-      userObj: {
-        ...this.state.userObj,
+      user: {
+        ...this.state.user,
         username: event.target.value
       }
     })
@@ -42,19 +44,19 @@ class SignUpForm extends Component {
   handlePasswordChange = (event) => {
     console.log(event.target.value)
     this.setState({
-      userObj: {
-        ...this.state.userObj,
+      user: {
+        ...this.state.user,
         password: event.target.value
       }
     })
   }
 
   handleGenderChange = (event) => {
-    console.log(event.target.innerText)
+    console.log(event.target.innerText.toLowerCase())
     this.setState({
-      userObj: {
-        ...this.state.userObj,
-        gender: event.target.innerText
+      user: {
+        ...this.state.user,
+        gender: event.target.innerText.toLowerCase()
       }
     })
   }
@@ -63,6 +65,14 @@ class SignUpForm extends Component {
     console.log('submitted')
     event.preventDefault()
     //create user and authenticate in backend
+    const user = this.state
+    PersonalityApi.signUp(user)
+      .then(json => {
+        localStorage.setItem('personalityToken', json.token)
+        localStorage.setItem('username', json.user.username)
+        localStorage.setItem('userID', json.user.id)
+      })
+      .then(() => this.props.history.push('/profile'))
   }
 
   render() {
@@ -75,14 +85,14 @@ class SignUpForm extends Component {
         <Grid.Column width={8}>
           <Form>
             <Form.Group widths='equal'>
-              <Form.Input label='Name' placeholder='Name' onChange={this.props.handleNameChange}/>
-              <Form.Input label='Username' placeholder='Username' onChange={this.props.handleUsernameChange}/>
+              <Form.Input label='Name' placeholder='Name' onChange={this.handleNameChange}/>
+              <Form.Input label='Username' placeholder='Username' onChange={this.handleUsernameChange}/>
             </Form.Group>
             <Form.Group widths='equal'>
-              <Form.Input label='Password' placeholder='Password' onChange={this.props.handlePasswordChange}/>
-              <Form.Select label='Gender' options={options} placeholder='Gender' onChange={this.props.handleGenderChange}/>
+              <Form.Input label='Password' placeholder='Password' onChange={this.handlePasswordChange}/>
+              <Form.Select label='Gender' options={options} placeholder='Gender' onChange={this.handleGenderChange}/>
             </Form.Group>
-            <Form.Button onClick={this.props.submitForm}>Submit</Form.Button>
+            <Form.Button onClick={this.submitForm}>Submit</Form.Button>
           </Form>
         </Grid.Column>
 
@@ -96,4 +106,4 @@ class SignUpForm extends Component {
 
 
 
-export default SignUpForm
+export default withRouter(SignUpForm)

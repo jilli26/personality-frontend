@@ -14,13 +14,22 @@ class PersonalityApi {
       .then(res => res.json())
   }
 
-  static register () {
-
+  static signUp(user) {
+    console.log(user);
+    console.log("User JSON String: " + JSON.stringify(user))
+    return fetch(`http://localhost:3000/api/v1/users`, {
+      method: "post",
+      body: JSON.stringify(user),
+      headers: {
+        "Accept":"application/json",
+        "Content-Type":"application/json"
+      }
+    }).then(res => res.json())
   }
 
-  static updateUser(userObj) {
+  static submitWritingSample(userObj) {
 
-    fetch(`http://localhost:3000/api/v1/users/${userObj.id}`, {
+    return fetch(`http://localhost:3000/api/v1/insights`, {
       method: "post",
       body: JSON.stringify(userObj),
       headers: {
@@ -29,7 +38,6 @@ class PersonalityApi {
         "Authorization":`Bearer ${localStorage.getItem('personalityToken')}`
       }
     }).then(res => res.json())
-      .then(json => console.log(json))
   }
 
 }

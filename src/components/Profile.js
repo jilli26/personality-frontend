@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid } from 'semantic-ui-react'
 import { Form } from 'semantic-ui-react'
+import PersonalInsightComponent from './PersonalInsightComponent'
 
 class Profile extends React.Component {
   render() {
@@ -16,11 +17,8 @@ class Profile extends React.Component {
               <h2>
                 Welcome, {this.props.name}
               </h2>
-              <p>
-              Lorem ipsum dolor sit amet, libris putant eu nam, nec id modo choro suscipiantur. Etiam dicta percipit at usu. In ius sumo nusquam reprimique, nam primis aperiri voluptatibus an. Nec no atqui invidunt sadipscing, ex mei choro iudicabit, et mea percipit deseruisse. Per mazim vituperatoribus ei.
-
-              Est ei denique disputando voluptatibus, facete invenire sapientem vix ad. Cu his senserit disputationi, esse iudicabit an has. Sea nihil deleniti in, cum an ferri ullum. Eum ut labores laboramus, clita tacimates vim no. Ex sea enim veri, mel ludus tincidunt theophrastus ei.
-              </p>
+              <PersonalInsightComponent
+              personalInsight={this.props.personalInsight}/>
             </div>
           </Grid.Column>
 
@@ -41,7 +39,7 @@ class Profile extends React.Component {
 
           </Grid.Column>
 
-          <Grid.Column width={8}>
+          {/* <Grid.Column width={8}>
             <h3>Submit another writing sample...</h3>
             <Form>
               <Form.Group widths='equal'>
@@ -49,7 +47,7 @@ class Profile extends React.Component {
               </Form.Group>
               <Form.Button onClick={this.props.submitWritingSample}>Submit</Form.Button>
             </Form>
-          </Grid.Column>
+          </Grid.Column> */}
 
         </Grid>
       </div>
