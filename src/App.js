@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // import './App.css';
 
-import PersonalityContainer from './components/PersonalityContainer'
 import { Route, withRouter, Switch } from 'react-router-dom'
 import SignUpForm from './components/SignUpForm'
 import LoginForm from './components/LoginForm'
@@ -9,8 +8,6 @@ import WritingSampleForm from './components/WritingSampleForm'
 import NavBar from './components/NavBar'
 import PersonalityApi from './services/personalityApi'
 import Profile from './components/Profile'
-
-
 
 class App extends Component {
   constructor() {
@@ -23,13 +20,10 @@ class App extends Component {
     }
   }
 
-
-
   loginUser = (userObj) => {
     PersonalityApi.login(userObj)
     .then((json) => {
       localStorage.setItem('personalityToken', json.token)
-      localStorage.setItem('username', json.user.username)
       localStorage.setItem('userID', json.user.id)
       this.setState({
         user: json.user,
@@ -37,8 +31,20 @@ class App extends Component {
       })
     })
     .then(() => this.props.history.push('/profile'))
-
   }
+
+  signupUser = (userObj) => {
+    PersonalityApi.signUp(userObj)
+      .then(json => {
+        localStorage.setItem('personalityToken', json.token)
+        localStorage.setItem('userID', json.user.id)
+        this.setState({
+          user: json.user
+        })
+      })
+      .then(() => this.props.history.push('/writingsample'))
+  }
+
 
   handleWritingSampleChange = (value) => {
     this.setState({
@@ -46,6 +52,17 @@ class App extends Component {
           writing_sample: value
         }
     })
+  }
+
+  writingSampleSubmit = (userObj) => {
+    //post request to backend
+    PersonalityApi.submitWritingSample(userObj)
+      .then(json => {
+        this.setState({
+          insight: json.insight
+        }, () => console.log(this.state))
+      })
+      .then(() => this.props.history.push('/profile'))
   }
 
   componentDidMount() {
@@ -64,9 +81,9 @@ class App extends Component {
           <Route
             exact path="/login"
             render={() => <LoginForm onLogin={this.loginUser}/>} />
-          <Route exact path="/signup" component={SignUpForm} />
-          <Route exact path="/profile" render={() => <Profile userInfo={this.state} name={this.state.user.name} writingSample={this.state.insight.writing_sample} personalInsight={this.state.insight}/>} />
-          <Route exact path="/writingsample" render={() => <WritingSampleForm />} />
+          <Route exact path="/signup" render={() => <SignUpForm onSignup={this.signupUser}/>} />
+          <Route exact path="/profile" render={() => <Profile userInfo={this.state} name={this.state.user.name} writingSample={this.state.insight.writing_sample}/>} />
+          <Route exact path="/writingsample" render={() => <WritingSampleForm formData={this.state} onSubmit={this.writingSampleSubmit} onWritingSampleChange={this.handleWritingSampleChange} />} />
         </Switch>
         </div>
       </div>

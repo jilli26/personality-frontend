@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid } from 'semantic-ui-react'
-import { Form } from 'semantic-ui-react'
 import PersonalInsightComponent from './PersonalInsightComponent'
 
 class Profile extends React.Component {
@@ -18,7 +17,7 @@ class Profile extends React.Component {
                 Welcome, {this.props.name}
               </h2>
               <PersonalInsightComponent
-              personalInsight={this.props.personalInsight}/>
+              personalInsight={this.props.userInfo}/>
             </div>
           </Grid.Column>
 
@@ -36,18 +35,7 @@ class Profile extends React.Component {
         <Grid>
 
           <Grid.Column width={4}>
-
           </Grid.Column>
-
-          {/* <Grid.Column width={8}>
-            <h3>Submit another writing sample...</h3>
-            <Form>
-              <Form.Group widths='equal'>
-                <Form.TextArea  placeholder='For best results, please submit a sample of 1000 words or more' onChange={this.props.handleWritingSampleChange}/>
-              </Form.Group>
-              <Form.Button onClick={this.props.submitWritingSample}>Submit</Form.Button>
-            </Form>
-          </Grid.Column> */}
 
         </Grid>
       </div>

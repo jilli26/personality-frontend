@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 class LoginForm extends React.Component {
 
@@ -29,11 +29,7 @@ class LoginForm extends React.Component {
   render() {
     return(
       <div className='login-form'>
-        {/*
-          Heads up! The styles below are necessary for the correct render of this example.
-          You can do same with CSS, the main idea is that all the elements up to the `Grid`
-          below must have a height of 100%.
-        */}
+
         <style>{`
           body > div,
           body > div > div,
@@ -48,8 +44,7 @@ class LoginForm extends React.Component {
         >
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='teal' textAlign='center'>
-              <Image src='/logo.png' />
-              {' '}Log-in to your account
+            Log-in to your account
             </Header>
             <Form onSubmit={this.handleSubmit} size='large'>
               <Segment stacked>
@@ -75,7 +70,6 @@ class LoginForm extends React.Component {
                   type="submit"
                   value="Login"
                   color='teal'
-                  fluid size='large'
                 />
               </Segment>
             </Form>

@@ -4,6 +4,17 @@ import { Grid } from 'semantic-ui-react'
 
 class WritingSampleForm extends React.Component {
 
+  handleChange = (event) => {
+    console.log(event.target.value)
+    this.props.onWritingSampleChange(event.target.value)
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const userObj = this.props.formData
+    this.props.onSubmit(userObj)
+  }
+
   render() {
     return (
       <Grid>
@@ -12,11 +23,11 @@ class WritingSampleForm extends React.Component {
         </Grid.Column>
 
         <Grid.Column width={8}>
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <Form.Group widths='equal'>
-              <Form.TextArea label='Writing Sample' placeholder='Please paste a writing sample written by you (min 1000 words)...' onChange={this.props.handleChange}/>
+              <Form.TextArea label='Writing Sample' placeholder='Please paste a writing sample written by you at least 500 words)...' onChange={this.handleChange}/>
             </Form.Group>
-            <Form.Button onClick={this.props.submitWritingSample}>Submit</Form.Button>
+            <Form.Button>Submit</Form.Button>
           </Form>
         </Grid.Column>
       </Grid>
